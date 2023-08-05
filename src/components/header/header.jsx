@@ -7,16 +7,23 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/userContext';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
-const pages = ['Events', 'Interests', 'Schdule'];
-const settings = ['Login', 'Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Home', 'Children', 'Events']
+  const pageMapping = {
+    'Home': '/',
+    'Children': '/children-page',
+    'Events': '/events-page'
+    
+  }
+
+const settings = ['Login', 'Profile', 'Account', 'Dashboard', 'Logout']
 
 function Header() {
 
@@ -34,7 +41,7 @@ function Header() {
   };
 
   const handleCloseNavMenu = (pageName) => {
-    navigate(`/${pageName.toLowerCase()}`)
+    navigate(pageMapping[pageName])
     setAnchorElNav(null);
   };
 
@@ -44,10 +51,9 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{background: 'white'}} style={{boxShadow: 'none'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -59,11 +65,11 @@ function Header() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: 'inherit',
+              color: '#b7e994',
               textDecoration: 'none',
             }}
           >
-            MEET UP
+            KIDate
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -75,7 +81,7 @@ function Header() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon style={{ fill: 'black' }}/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -124,6 +130,7 @@ function Header() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
+              style={{color:'#eecfae'}}
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
@@ -136,7 +143,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user.user?.first_name} src="/static/images/avatar/2.jpg" />
+                <PersonOutlineIcon style={{padding: "1em", fill: '#dfaeee' }} />
               </IconButton>
             </Tooltip>
             <Menu

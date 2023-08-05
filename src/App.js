@@ -6,6 +6,7 @@ import { useContext, useEffect } from 'react';
 import { SetUserContext } from './context/userContext';
 import axios from 'axios';
 import { ME_URL } from './infra/urls';
+import { Stack } from '@mui/material';
 
 function App() {
 
@@ -29,11 +30,10 @@ function App() {
   )
   return (
     <>
-      <Header />
-      {/* <Sidebarapp /> */}
-      <Outlet />
-      <h3>kidmeet</h3>
-    
+      <Header/>
+      <Stack alignItems={"center"} paddingLeft={"5em"} paddingRight={"5em"} paddingBottom={"10em"} paddingTop={"2em"}>
+        <Outlet />
+      </Stack>
     </>
   );
 }

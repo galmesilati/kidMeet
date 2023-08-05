@@ -5,11 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import EventPage from './components/events/eventsPage';
-import InterestPage from './components/interests/interestsPage';
-import SchedulePage from './components/schedule/schedule';
-import EventDetails from './components/events/eventDetails';
 import LoginPage from './components/login/loginPage';
 import UserProvider from './context/userContext';
+import HomePage from './components/home/homePage';
+import ChildrenPage from './components/children/childrenPage';
+import EventDetails from './components/events/eventDetails';
 
 
 
@@ -20,26 +20,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <EventPage />,
-        // children: [
-        //   {
-        //     path: '/events/:eventId',
-        //     element: <EventDetails />
-        //   }
-        // ] - in same page
+        element: <HomePage />,
       },
       { 
-        path: '/events/:eventId',
-        element: <EventDetails /> 
-        // in new page, when on click event
+        path: '/children-page',
+        element: <ChildrenPage /> 
       },
       {
-        path: '/interests',
-        element: <InterestPage />
+        path: '/events-page',
+        element: <EventPage />
       },
       {
-        path: '/schuedule',
-        element: <SchedulePage />
+        path:'events-page/:eventId',
+        element: <EventDetails />
       }
     ]
   },

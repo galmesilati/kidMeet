@@ -8,7 +8,7 @@ export default function EventItem({myEvent}){
 
   const handleClick = () => {
     console.log('bla')
-    navigate(`/events/${myEvent.event_id}`)
+    navigate(`/events-page/${myEvent.event_id}`)
   }
   return(
     <ListItem sx={{height: '500px'}}>
