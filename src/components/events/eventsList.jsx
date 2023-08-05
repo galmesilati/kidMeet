@@ -9,7 +9,7 @@ export default function EventsList({events,loadMore}){
   console.log('events', events)
 
   const items = results.map((event) => {
-    return <EventItem key={event.id} myEvent={event}/>
+    return <EventItem key={event.event_id} myEvent={event}/>
   })
 
   return(
