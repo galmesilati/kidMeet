@@ -28,29 +28,39 @@ const HomePage = () => {
       <Typography level="display1" variant="plain" >
         Welcome!
       </Typography >
-       <br/>
-       Kidate is an innovative application designed to help parents schedule meeting dates
-          for their children in a hassle-free way. Say goodbye to the headache of organizing playdates!
+      <Typography variant="body1">
+          Today, parents of small children are constantly juggling schedules for classes,
+          playdates, birthdays, and more. It can be overwhelming and time-consuming.
           <br />
-          Easily Enter Your Child's Weekly Schedule
+          KIDate is here to rescue! Our innovative app is designed to help parents coordinate
+          meeting dates for their children in a hassle-free way.
           <br />
-          With Kidate, you can effortlessly enter your child's weekly schedule, indicating the days
-          they are available and the days they have prior commitments. We understand that your child's
-          time is precious, and Kidate ensures you can make the most of their free days.
           <br />
-          Connect with Complementary Schedules
+          <strong>Effortless Planning</strong>
           <br />
-          Kidate's smart algorithm uses the schedule information of multiple children to suggest
-          potential meeting dates for playdates. Find other parents whose children have complementary
-          schedules, making playdate planning a breeze.
+          Easily enter your child's weekly schedule, including classes, extracurricular activities,
+          and free time to meet friends. Say goodbye to the headache of coordinating playdates on
+          multiple platforms.
           <br />
-          Enhance Your Children's Social Experience
           <br />
-          We believe in fostering social connections for your children. Kidate brings kids together
-          in fun and engaging playdates, promoting friendship and social growth.
+          <strong>Collaborative Calendar</strong>
           <br />
-          Simplify your life and enrich your children's playtime with Kidate. Get started today and
-          make playdate planning a joy!
+          The Schedule page displays a collaborative calendar where parents can sync and view each
+          other's child schedules. It allows you to find the perfect time for your child's playdate
+          with friends.
+          <br />
+          <br />
+          <strong>Connecting Kids, One Playdate at a Time</strong>
+          <br />
+          KIDate fosters meaningful friendships and social growth. Let your child explore fun and
+          engaging hangouts with friends, while you enjoy a hassle-free planning experience.
+          <br />
+          <br />
+          <strong>Unlock the Joy of Playdates</strong>
+          <br />
+          Make the most of your kids' free time by coordinating exciting playdates effortlessly.
+          KIDate empowers parents to create lasting memories for their children.
+        </Typography>
       </p>
       </Stack>
     </>

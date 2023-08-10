@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { EVENT_DETAILS_URL } from "../../infra/urls"
-import { Stack } from "@mui/material"
+import { Box, Container, Stack } from "@mui/material"
 
 const EventDetails = () => {
 
@@ -20,7 +20,7 @@ const EventDetails = () => {
 
   return(
     <>
-    {event && 
+        {event && 
         <Stack direction={'column'}>
           <p>{`Title: ${event.title}`}</p>
           <br/>
@@ -31,7 +31,6 @@ const EventDetails = () => {
           <p>{`End_event: ${event.end_event}`}</p>
 
         </Stack>
-
     }
     
     </>

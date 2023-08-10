@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../context/userContext';
+import { SetUserContext, UserContext } from '../../context/userContext';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const pages = ['Home', 'Children', 'Events']
@@ -23,12 +23,22 @@ const pages = ['Home', 'Children', 'Events']
     
   }
 
-const settings = ['Login', 'Profile', 'Account', 'Dashboard', 'Logout']
+const settings = ['Login', 'Profile', 'Signup', 'Logout']
+const settingsMapping = {
+  'Home': '/',
+  'Logout': '/',
+  'Login': '/login',
+  'Signup': '/Signup',
+  
+}
 
 function Header() {
 
     const navigate = useNavigate()
+
     const user = React.useContext(UserContext)
+    const setUser = React.useContext(SetUserContext)
+    console.log(user)
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -45,13 +55,18 @@ function Header() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    navigate('/login')
+  const handleCloseUserMenu = (setting) => {
+    navigate(settingsMapping[setting])
+    if (setting==='Logout'){
+      setUser(
+        {user:{}}
+      )
+    }
     setAnchorElUser(null);
   };
 
   return (
-    <AppBar position="static" sx={{background: 'white'}} style={{boxShadow: 'none'}}>
+    <AppBar position="sticky" sx={{background: 'white'}} style={{boxShadow: 'none'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -81,7 +96,7 @@ function Header() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon style={{ fill: 'black' }}/>
+              <MenuIcon style={{ fill: 'grey' }}/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -163,7 +178,7 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))

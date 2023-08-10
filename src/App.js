@@ -19,7 +19,7 @@ function App() {
         if (token) {
           const meResponse = await axios.get(ME_URL,
             {headers: {Authorization: `Bearer ${token}`}})
-          console.log(meResponse)
+          // console.log(meResponse)
           setUser({
             user: {...meResponse.data}
           })

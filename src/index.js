@@ -10,6 +10,7 @@ import UserProvider from './context/userContext';
 import HomePage from './components/home/homePage';
 import ChildrenPage from './components/children/childrenPage';
 import EventDetails from './components/events/eventDetails';
+import Signup from './components/signup/signupPage';
 
 
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />
+  },
+  {
+    path: '/signup',
+    element: <Signup />
   }
 ])
 
