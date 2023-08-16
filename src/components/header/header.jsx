@@ -58,6 +58,7 @@ function Header() {
   const handleCloseUserMenu = (setting) => {
     navigate(settingsMapping[setting])
     if (setting==='Logout'){
+      localStorage.removeItem('token')
       setUser(
         {user:{}}
       )

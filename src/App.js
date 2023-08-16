@@ -6,7 +6,8 @@ import { useContext, useEffect } from 'react';
 import { SetUserContext } from './context/userContext';
 import axios from 'axios';
 import { ME_URL } from './infra/urls';
-import { Stack } from '@mui/material';
+import { Snackbar, Stack } from '@mui/material';
+import Notification from './components/notification/notification';
 
 function App() {
 
@@ -15,15 +16,15 @@ function App() {
   useEffect(
     () => {
       const fetchData = async () => {
-        const token = localStorage.getItem('token')
-        if (token) {
-          const meResponse = await axios.get(ME_URL,
-            {headers: {Authorization: `Bearer ${token}`}})
+        // const token = localStorage.getItem('token')
+        // if (token) {
+          const meResponse = await axios.get(ME_URL)
+            // {headers: {Authorization: `Bearer ${token}`}})
           // console.log(meResponse)
           setUser({
             user: {...meResponse.data}
           })
-        }
+        // }
       }
       fetchData()
     }, []
@@ -33,7 +34,9 @@ function App() {
       <Header/>
       <Stack alignItems={"center"} paddingLeft={"5em"} paddingRight={"5em"} paddingBottom={"10em"} paddingTop={"2em"}>
         <Outlet />
+        <Notification />
       </Stack>
+
     </>
   );
 }

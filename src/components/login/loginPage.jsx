@@ -12,17 +12,20 @@ import axios from "axios";
 import { LOGIN_URL, ME_URL } from "../../infra/urls";
 import { SetUserContext, UserContext } from "../../context/userContext";
 import { Navigate, useNavigate } from "react-router-dom";
+import { SetNotificationContext } from "../../context/notificationContext";
 
 const LoginPage = () => {
 
   const navigate = useNavigate()
   const setUser = useContext(SetUserContext)
+  const setNotification = useContext(SetNotificationContext)
 
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    try {
     const response = 
         await axios.post(LOGIN_URL, {username: email, password: password})
 
@@ -37,6 +40,22 @@ const LoginPage = () => {
             user: meResponse.data
         })
         navigate('/')
+        setNotification({open: true, 
+        massage: "You have successfully logged in"})
+        
+    } catch (e) {
+      console.log(e)
+      setNotification({open: true, massage: e.response.data.detail})
+    }
+
+        // const token = localStorage.getItem('token')
+        // const meResponse = await axios.get(ME_URL, 
+        //   {headers: {Authorization: `Bearer ${token}`}})
+        // console.log(meResponse)
+        // setUser({
+        //     user: meResponse.data
+        // })
+        // navigate('/')
         
   };
 

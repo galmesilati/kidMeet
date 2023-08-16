@@ -11,7 +11,20 @@ import HomePage from './components/home/homePage';
 import ChildrenPage from './components/children/childrenPage';
 import EventDetails from './components/events/eventDetails';
 import Signup from './components/signup/signupPage';
+import Notification from './components/notification/notification';
+import axios from 'axios';
 
+axios.interceptors.request.use(
+  (config) => {
+
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  }
+)
 
 
 const router = createBrowserRouter([
@@ -49,9 +62,11 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <UserProvider>
-    <RouterProvider router={router} />
-  </UserProvider>
+  <Notification>
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
+  </Notification>
 );
 
 // If you want to start measuring performance in your app, pass a function

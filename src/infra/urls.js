@@ -10,4 +10,6 @@ export const LOGIN_URL = `${BASE_URL}/api/meetup/tokens/`
 
 export const ME_URL = `${BASE_URL}/api/meetup/me/`
 
-export const CHILDREN_LIST_URL = `${BASE_URL}/api/meetup/children`
+export const USER_CHILDREN_LIST_URL = `${BASE_URL}/api/meetup/children/user_children`
+
+export const CHILD_URL = `${BASE_URL}/api/meetup/children/`

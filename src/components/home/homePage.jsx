@@ -6,7 +6,7 @@ const HomePage = () => {
     <>
       <Stack alignItems={"center"} direction={"column"} spacing={"4em"} >
       
-      <p style={{width: "40em", "white-space": "normal"}}>
+      <p style={{width: "40em", "whiteSpace": "normal"}}>
       <Typography 
       level={'h1'}
       variant="h6"
