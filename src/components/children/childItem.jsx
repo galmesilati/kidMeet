@@ -8,8 +8,10 @@ export default function ChildItem({child}){
   const navigate = useNavigate()
 
   const handleClick = () => {
-    navigate(`/child-page/${child.child_id}`)
+    navigate(`/children-page/${child.child_id}`)
   }
+
+
   return(
     <ListItem sx={{height: '100px'}}>
       <Paper elevation={3} 
@@ -21,10 +23,10 @@ export default function ChildItem({child}){
               paddingX: '2em'}}>
       <Typography sx={{color: "grey"}}>{`${child.child_name}`}</Typography>
 
-        <IconButton>
-            <ArrowCircleRightIcon onClick={handleClick} sx={{fill: "#a5ebff"}}/>
+        <IconButton onClick={handleClick}>
+            {/* <ArrowCircleRightIcon sx={{fill: "#a5ebff"}}/> */}
         </IconButton>
-        
+
       </Paper>
     </ListItem>
 

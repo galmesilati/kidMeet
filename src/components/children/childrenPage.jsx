@@ -21,6 +21,7 @@ const ChildrenPage = () => {
       
   }
 
+
     React.useEffect(
       () => {
           const fetchData = async () => {
@@ -61,11 +62,13 @@ const ChildrenPage = () => {
                     <Button onClick={() => {GetChild(child.child_id)}}>{child.name}</Button>
                     <Button>Edit</Button>
                   </div>
+                  
                 )
 
               })
             }
           </div>
+        
           
         </ButtonGroup>
         <ChildSearch />

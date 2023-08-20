@@ -13,6 +13,7 @@ import EventDetails from './components/events/eventDetails';
 import Signup from './components/signup/signupPage';
 import Notification from './components/notification/notification';
 import axios from 'axios';
+import ChildDetails from './components/children/childDetails';
 
 axios.interceptors.request.use(
   (config) => {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       { 
         path: '/children-page',
         element: <ChildrenPage /> 
+      },
+      {
+        path: 'children-page/:childId',
+        element: <ChildDetails />
       },
       {
         path: '/events-page',
