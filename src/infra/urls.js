@@ -13,3 +13,9 @@ export const ME_URL = `${BASE_URL}/api/meetup/me/`
 export const USER_CHILDREN_LIST_URL = `${BASE_URL}/api/meetup/children/user_children`
 
 export const CHILD_URL = `${BASE_URL}/api/meetup/children/`
+
+export const CREATE_USER = `${BASE_URL}/api/meetup/user/`
+
+export const INTERESTS_URL = `${BASE_URL}/api/meetup/interest/`
+
+export const  CREATE_EVENT = `${BASE_URL}/api/meetup/event/`

@@ -12,14 +12,11 @@ import { useNavigate } from "react-router-dom";
 const ChildrenPage = () => {
 
   const [children, setChildren] = React.useState([])
+  // const [interests, setInterests] = React.useState({results:[]})
 
   const [openAddChildModal, setOpenAddChildModal] = React.useState(false);
 
-  const GetChild = async (childId) => {
-      const response = await axios.get(`${urls.CHILD_URL}${childId}`)
-      console.log(response.data)
-      
-  }
+  const navigate = useNavigate()
 
 
     React.useEffect(
@@ -42,6 +39,8 @@ const ChildrenPage = () => {
         []
     )
 
+
+
   return(
     <>
      <Stack spacing='2em' alignItems='center'>
@@ -59,7 +58,7 @@ const ChildrenPage = () => {
               children && children.map((child) => {
                 return(
                   <div>
-                    <Button onClick={() => {GetChild(child.child_id)}}>{child.name}</Button>
+                    <Button onClick={() => navigate(`/children-page/${child.child_id}`)}>{child.name}</Button>
                     <Button>Edit</Button>
                   </div>
                   
@@ -71,7 +70,7 @@ const ChildrenPage = () => {
         
           
         </ButtonGroup>
-        <ChildSearch />
+        {/* <ChildSearch /> */}
         <NewChildModal open={openAddChildModal} setOpen={setOpenAddChildModal}/>
       </Stack>
       

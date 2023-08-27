@@ -13,7 +13,7 @@ export default function ChildItem({child}){
 
 
   return(
-    <ListItem sx={{height: '100px'}}>
+    <ListItem sx={{height: '100px'}} onClick={handleClick}>
       <Paper elevation={3} 
               sx={{width: '100%',  height: 60, 
               textAlign: 'center', 
@@ -23,9 +23,9 @@ export default function ChildItem({child}){
               paddingX: '2em'}}>
       <Typography sx={{color: "grey"}}>{`${child.child_name}`}</Typography>
 
-        <IconButton onClick={handleClick}>
+        {/* <IconButton onClick={handleClick}> */}
             {/* <ArrowCircleRightIcon sx={{fill: "#a5ebff"}}/> */}
-        </IconButton>
+        {/* </IconButton> */}
 
       </Paper>
     </ListItem>

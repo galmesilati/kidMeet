@@ -1,34 +1,33 @@
-import { Typography } from "@mui/joy"
-import { Stack } from "@mui/material"
+import { Stack } from "@mui/material";
+import {Typography} from '@mui/joy';
 
 const HomePage = () => {
   return(
     <>
-      <Stack alignItems={"center"} direction={"column"} spacing={"4em"} >
+      <Stack  width={{xs:"100%", lg:"50%"}} 
+      alignItems={"center"} direction={"column"} spacing={"3em"} >
       
-      <p style={{width: "40em", "whiteSpace": "normal"}}>
-      <Typography 
-      level={'h1'}
-      variant="h6"
+      <Typography
       noWrap
       component="a"
       href="/"
       sx={{
+        "font-size": "70px",
         mr: 2,
         display: { xs: 'none', md: 'flex' },
         fontFamily: 'monospace',
-        fontWeight: 700,
-        letterSpacing: '.3rem',
+        fontWeight: 600,
+        letterSpacing: '1rem',
         color: '#b7e994',
         textDecoration: 'none',
       }}
       >
         KIDate
       </Typography>
-      <Typography level="display1" variant="plain" >
-        Welcome!
-      </Typography >
       <Typography variant="body1">
+          Welcome!
+          <br />
+          <br />
           Today, parents of small children are constantly juggling schedules for classes,
           playdates, birthdays, and more. It can be overwhelming and time-consuming.
           <br />
@@ -61,7 +60,6 @@ const HomePage = () => {
           Make the most of your kids' free time by coordinating exciting playdates effortlessly.
           KIDate empowers parents to create lasting memories for their children.
         </Typography>
-      </p>
       </Stack>
     </>
   )

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -11,20 +10,48 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
+import { CREATE_USER } from '../../infra/urls';
+import { useNavigate } from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
 const Signup = () => {
-  const handleSubmit = (event) => {
+
+  const navigate = useNavigate()
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
+  const data = new FormData(event.currentTarget);
+  const userData = {
+    user: {
       email: data.get('email'),
       password: data.get('password'),
-    });
+      first_name: data.get('firstName'),
+      last_name: data.get('lastName')
+    },
+    phone_number: data.get('phone'),
+    birth_year: parseInt(data.get('birth-year')),
+    address: {
+      city: data.get('city'),
+      street: data.get('street'),
+      house_number: parseInt(data.get('house-number'))
+    }
   };
+
+  console.log('userData', userData);
+
+  try {
+    const response = await axios.post(CREATE_USER, userData);
+    console.log("response", response)
+    navigate('/login')
+  } catch (error) {
+    console.log('Error', error);
+  }
+};
+    
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -87,7 +114,7 @@ const Signup = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email "
                   name="email"
                   autoComplete="email"
                 />
@@ -101,6 +128,66 @@ const Signup = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone number"
+                  name="phone"
+                  autoComplete="phone"
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  required
+                  fullWidth
+                  id="birthYear"
+                  label="Birth year"
+                  name="birth-year"
+                  autoComplete="birth-year"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} >
+                <TextField
+                  required
+                  fullWidth
+                  id="city"
+                  label="City"
+                  name="city"
+                  autoComplete="city"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} >
+                <TextField
+                  required
+                  fullWidth
+                  id="street"
+                  label="Street"
+                  name="street"
+                  autoComplete="street"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="houseNumber"
+                  label="House number"
+                  name="house-number"
+                  autoComplete="house-number"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} >
+                <TextField
+                  
+                  fullWidth
+                  id="floorNumber"
+                  label="Floor number"
+                  name="floor-number"
+                  autoComplete="floor-number"
                 />
               </Grid>
               <Grid item xs={12}>
