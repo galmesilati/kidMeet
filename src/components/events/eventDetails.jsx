@@ -19,21 +19,16 @@ const EventDetails = () => {
   }, [eventId])
 
   return(
-    <>
-        {event && 
-        <Stack direction={'column'}>
+    <Stack direction="column" spacing={2}>
+      {event?.title && (
+        <>
           <p>{`Title: ${event.title}`}</p>
-          <br/>
           <p>{`Description: ${event.description}`}</p>
-          <br/>
-          <p>{`Start_event: ${event.start_event}`}</p>
-          <br/>
-          <p>{`End_event: ${event.end_event}`}</p>
-
-        </Stack>
-    }
-    
-    </>
+          <p>{`Start_event: ${new Date(event.start_event).toLocaleString()}`}</p>
+          <p>{`End_event: ${new Date(event.end_event).toLocaleString()}`}</p>
+        </>
+      )}
+    </Stack>
   )
 }
 

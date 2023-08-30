@@ -19,3 +19,5 @@ export const CREATE_USER = `${BASE_URL}/api/meetup/user/`
 export const INTERESTS_URL = `${BASE_URL}/api/meetup/interest/`
 
 export const  CREATE_EVENT = `${BASE_URL}/api/meetup/event/`
+
+export const UPLOAD_PROFILE_IMG_URL = `${BASE_URL}/api/meetup/profile/img`

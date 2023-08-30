@@ -29,6 +29,7 @@ const settingsMapping = {
   'Logout': '/',
   'Login': '/login',
   'Signup': '/Signup',
+  'Profile': '/profile'
   
 }
 

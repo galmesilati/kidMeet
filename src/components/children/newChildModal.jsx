@@ -8,9 +8,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import { CHILD_URL, INTERESTS_URL } from '../../infra/urls';
 import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { UserContext } from '../../context/userContext';
 
 
 export default function NewChildModal({open, setOpen}) {
+
+  const user = React.useContext(UserContext)
 
   const [interests, setInterests] = React.useState([]);
   const [selectedInterests, setSelectedInterests] = React.useState([]);
@@ -32,6 +35,16 @@ export default function NewChildModal({open, setOpen}) {
     );
   };
 
+  const createInterests = () => {
+
+    const filteredInterests = interests.filter(interest => selectedInterests.includes(interest.name))
+    const interestsIdArray = filteredInterests.map(interestobj => interestobj.interest_id)
+
+    return(
+      interestsIdArray
+    )
+  }
+
   React.useEffect(() => {
     async function fetchInterests() {
       try {
@@ -44,18 +57,19 @@ export default function NewChildModal({open, setOpen}) {
     fetchInterests()
   }, [])
 
-
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
   const childData = {
     name: name,
-    age: age,
+    age: parseFloat(age),
     kindergarten: kindergarten,
     school: school,
     classroom: classroom,
-    interests: interests
+    user: user.user_id,
+    // interests: selectedInterests
+    interests: createInterests()
   }
 
   console.log('childData', childData)
@@ -147,7 +161,7 @@ export default function NewChildModal({open, setOpen}) {
           renderValue={(selected) => selected.join(', ')}
         >
           {interests.map((interest) => (
-            <MenuItem key={interest.name} value={interest.name}>
+            <MenuItem key={interest.interest_id} value={interest.name}>
               <Checkbox checked={selectedInterests.indexOf(interest.name) > -1} />
               <ListItemText primary={interest.name} />
             </MenuItem>
