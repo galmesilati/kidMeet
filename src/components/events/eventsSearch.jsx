@@ -24,7 +24,6 @@ export default function EventsSearch({setEvents}) {
   const handleSearch = async() => {
     const response = await axios.get(EVENT_DETAILS_URL, {params: {title: selectedTitle}})
     setEvents(response.data)
-
   }
     return(
         <>

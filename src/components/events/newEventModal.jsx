@@ -14,15 +14,11 @@ import { StaticDateTimePicker } from '@mui/x-date-pickers/StaticDateTimePicker';
 import dayjs from 'dayjs';
 import { SetNotificationContext } from '../../context/notificationContext';
 import { useContext } from 'react';
+import * as urls from '../../infra/urls'
 
 
-export default function NewEventModal({open, setOpen}) {
+export default function NewEventModal({open, setOpen, editingEvent, setEditingEvent}) {
  
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
 
   const setNotification = useContext(SetNotificationContext)
 
@@ -33,8 +29,20 @@ export default function NewEventModal({open, setOpen}) {
   const [startEvent, setStartEvent] = React.useState(null)
   const [endEvent, setEndEvent] = React.useState(null)
 
+  React.useEffect(() => {
+    if (editingEvent) {
+      setChildId(editingEvent.child_id)
+      setTitle(editingEvent.title)
+      setDescription(editingEvent.description)
+      setStartEvent(dayjs(editingEvent.startEvent))
+      setEndEvent(dayjs(editingEvent.endEvent))
+    }
+  }, [editingEvent])
 
-  const handleSubmit = async () => {
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
     const eventData = {
       child_id: childId,
       title: title,
@@ -43,25 +51,51 @@ export default function NewEventModal({open, setOpen}) {
       start_event: dayjs(startEvent).format(),
       end_event: dayjs(endEvent).format()
     }
+    
     console.log('Event Data:', eventData)
 
     try {
-      const response = await axios.post(CREATE_EVENT, eventData)
-      console.log('response', response)
-      setNotification({
-        open: true,
-        massage: "Event created successfully"
-      });
+      if (editingEvent) {
+        const response = await axios.patch(
+          `${urls.UPDATE_EVENT}${editingEvent.event_id}/`,
+           eventData
+           )
+        console.log('Response edit', response)
+        setNotification({
+          open: true,
+          massage: 'Event updated successfully'
+        })
+        setEditingEvent(null)
+      } else {
+        const response = await axios.post(CREATE_EVENT, eventData)
+        console.log('response create', response)
+        setNotification({
+          open: true,
+          massage: "Event created successfully"
+        })
+      }
+      handleClose()
       console.log("close after submit")
-      setOpen(false);
     } catch (error) {
       console.log('Error', error)
       setNotification({
         open: true,
-        massage: "Error creating the event. Please try again."
+        massage: "Error creating/editing the event. Please try again."
       });
     }
   }
+
+  const handleClose = () => {
+    setOpen(false);
+    setEditingEvent(null)
+
+    setChildId("")
+    setTitle("")
+    setLocation("")
+    setDescription("")
+    setStartEvent(null)
+    setEndEvent(null)
+  };
 
   return (
     <div>

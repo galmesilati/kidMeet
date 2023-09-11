@@ -7,11 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import { CHILD_URL, INTERESTS_URL } from '../../infra/urls';
-import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, useThemeProps } from '@mui/material';
 import { UserContext } from '../../context/userContext';
+import * as urls from '../../infra/urls'
 
 
-export default function NewChildModal({open, setOpen}) {
+export default function NewChildModal({open, setOpen, editingChild, setEditingChild}) {
 
   const user = React.useContext(UserContext)
 
@@ -55,7 +56,18 @@ export default function NewChildModal({open, setOpen}) {
       }
     }
     fetchInterests()
-  }, [])
+
+    if (editingChild) {
+      setName(editingChild.name)
+      setAge(editingChild.age)
+      setKindergarten(editingChild.kindergarten)
+      setSchool(editingChild.school)
+      setClassroom(editingChild.classroom)
+      setSelectedInterests(
+        editingChild.interests.map((interest) => interest.name)
+      )
+    }
+  }, [editingChild])
 
   
   const handleSubmit = async (event) => {
@@ -68,24 +80,39 @@ export default function NewChildModal({open, setOpen}) {
     school: school,
     classroom: classroom,
     user: user.user_id,
-    // interests: selectedInterests
     interests: createInterests()
   }
 
   console.log('childData', childData)
 
   try{
-    const response = await axios.post(CHILD_URL, childData);
-    console.log("response", response)
+    if (editingChild) {
+      const response = await axios.patch(
+        `${urls.CHILD_URL}${editingChild.child_id}/`,
+        childData
+      )
+      console.log('child updated', response.data)
+    } else {
+      const response = await axios.post(CHILD_URL, childData);
+      console.log("child created", response.data)
+    }
+    handleClose()
   } catch (error) {
     console.log('Error', error);
   }
-
   }
  
 
   const handleClose = () => {
     setOpen(false);
+    setEditingChild(null)
+
+    setName("")
+    setAge("")
+    setKindergarten("")
+    setSchool("")
+    setClassroom("")
+    setSelectedInterests([])
   };
 
   return (
@@ -110,7 +137,7 @@ export default function NewChildModal({open, setOpen}) {
             margin="dense"
             id="age"
             label="Age"
-            type="float"
+            type="number"
             fullWidth
             variant="standard"
             value={age}

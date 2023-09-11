@@ -15,11 +15,12 @@ import { useNavigate } from 'react-router-dom';
 import { SetUserContext, UserContext } from '../../context/userContext';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
-const pages = ['Home', 'Children', 'Events']
+const pages = ['Home', 'Children', 'Events', 'Child Events']
   const pageMapping = {
     'Home': '/',
     'Children': '/children-page',
-    'Events': '/events-page'
+    'Events': '/events-page',
+    'Child Events': '/child-events'
     
   }
 

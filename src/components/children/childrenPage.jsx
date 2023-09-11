@@ -6,17 +6,24 @@ import axios from "axios";
 import ChildSearch from "./childSearch";
 import NewChildModal from "./newChildModal";
 import { useNavigate } from "react-router-dom";
-
-
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import AddIcon from '@mui/icons-material/Add';
 
 const ChildrenPage = () => {
 
   const [children, setChildren] = React.useState([])
-  // const [interests, setInterests] = React.useState({results:[]})
 
   const [openAddChildModal, setOpenAddChildModal] = React.useState(false);
 
+  const [editingChild, setEditingChild] = React.useState(null)
+
   const navigate = useNavigate()
+
+  const handleEditClick = (child) => {
+    setEditingChild(child)
+    setOpenAddChildModal(true)
+
+  }
 
 
     React.useEffect(
@@ -45,33 +52,37 @@ const ChildrenPage = () => {
     <>
      <Stack spacing='2em' alignItems='center'>
         <Typography sx={{color: '#b7e994'}} variant="h3">My Children</Typography>
-          <Button color="secondary" onClick={() => {setOpenAddChildModal(true)}}>Add New Child</Button>
-          <ButtonGroup
-            disableElevation
-            variant="contained"
-            aria-label="Disabled elevation buttons"
-            color="secondary"
-        >
+          <Button sx={{width: '100%'}} color="secondary" onClick={() => {setOpenAddChildModal(true)}}>
+            <Stack direction={'row'} spacing={'2%'}>
+              <Typography sx={{width: '10em'}} >
+                Add New Child   
+              </Typography>  
+              <AddIcon /> 
+            </Stack>
+          </Button>
           <div>
-            <h3>my children</h3>
+            <Stack direction={"column"} spacing={"3%"} sx={{width: '100%'}}>
             {
               children && children.map((child) => {
                 return(
-                  <div>
-                    <Button onClick={() => navigate(`/children-page/${child.child_id}`)}>{child.name}</Button>
-                    <Button>Edit</Button>
-                  </div>
-                  
+                  <Stack direction={"row"} spacing={"2%"} width={'100%'} justifyContent={"space-between"}>
+                    <Button  sx={{width: '100%'}} color="secondary"  onClick={() => navigate(`/children-page/${child.child_id}`)}>{child.name}</Button>
+                    <Button  color="secondary"  onClick={() => handleEditClick(child)}>
+                      <EditTwoToneIcon />
+                    </Button>
+                  </Stack>
                 )
 
               })
             }
+            </Stack>
           </div>
         
-          
-        </ButtonGroup>
-        {/* <ChildSearch /> */}
-        <NewChildModal open={openAddChildModal} setOpen={setOpenAddChildModal}/>
+        <NewChildModal
+          open={openAddChildModal}
+          setOpen={setOpenAddChildModal}
+          editingChild={editingChild}
+          setEditingChild={setEditingChild}/>
       </Stack>
       
     </>
