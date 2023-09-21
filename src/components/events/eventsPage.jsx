@@ -43,21 +43,30 @@ const EventsPage = () => {
   return(
     <>
     <Stack alignItems='center'>
-      <Typography sx={{color: '#b7e994'}} variant="h3">Events</Typography>
+      <Typography color={'primary'} variant="h3">Events</Typography>
+      <Button  sx={{width: '100%'}} color="secondary" onClick={() => {setOpenAddEventModal(true)}}>
+        <Stack direction={'row'} spacing={'2%'}>
+              <Typography sx={{width: '10em'}} >
+                Add New Event   
+              </Typography>  
+              <AddIcon /> 
+            </Stack>
+        </Button>
       <EventsSearch setEvents={setEvents}/>
     </Stack>
+    
     
     
     <Stack direction={'row'} sx={{width: '100%'}}>
       <EventsList events={events} loadMore={fetchData}/>
       <Outlet />
     </Stack>
-
+{/* 
     <Fab aria-label="add" 
-        sx={{position: 'absolute',bottom: 16, right: 16, backgroundColor: "#a5ebff"}}
+        sx={{position: 'absolute',bottom: 16, right: 16}}
         onClick={() => setOpenAddEventModal(true)}>
-            <AddIcon sx={{fill: "white"}}/>
-        </Fab>
+            <AddIcon color="primary"/>
+        </Fab> */}
         <NewEventModal open={openAddEventModal} setOpen={setOpenAddEventModal}/>
         
     </>

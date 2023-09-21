@@ -51,10 +51,10 @@ const ChildrenPage = () => {
   return(
     <>
      <Stack spacing='2em' alignItems='center'>
-        <Typography sx={{color: '#b7e994'}} variant="h3">My Children</Typography>
+        <Typography color='primary' variant="h3">My Children</Typography>
           <Button sx={{width: '100%'}} color="secondary" onClick={() => {setOpenAddChildModal(true)}}>
             <Stack direction={'row'} spacing={'2%'}>
-              <Typography sx={{width: '10em'}} >
+              <Typography color='secondary' sx={{width: '10em'}} >
                 Add New Child   
               </Typography>  
               <AddIcon /> 
@@ -66,7 +66,7 @@ const ChildrenPage = () => {
               children && children.map((child) => {
                 return(
                   <Stack direction={"row"} spacing={"2%"} width={'100%'} justifyContent={"space-between"}>
-                    <Button  sx={{width: '100%'}} color="secondary"  onClick={() => navigate(`/children-page/${child.child_id}`)}>{child.name}</Button>
+                    <Button sx={{ color: 'secondary.dark', width: '100%'}}  onClick={() => navigate(`/children-page/${child.child_id}`)}>{child.name}</Button>
                     <Button  color="secondary"  onClick={() => handleEditClick(child)}>
                       <EditTwoToneIcon />
                     </Button>

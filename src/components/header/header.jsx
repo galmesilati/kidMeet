@@ -72,7 +72,7 @@ function Header() {
     <AppBar position="sticky" sx={{background: 'white'}} style={{boxShadow: 'none'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
+          <Typography color='primary'
             variant="h6"
             noWrap
             component="a"
@@ -83,7 +83,7 @@ function Header() {
               fontFamily: 'monospace',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: '#b7e994',
+              // color: '#b7e994',
               textDecoration: 'none',
             }}
           >
@@ -99,7 +99,7 @@ function Header() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon style={{ fill: 'grey' }}/>
+              <MenuIcon color='secondary'/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -148,10 +148,10 @@ function Header() {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-              style={{color:'#eecfae'}}
+              color='secondary'
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, display: 'block' }}
               >
                 {page}
               </Button>
@@ -161,7 +161,7 @@ function Header() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <PersonOutlineIcon style={{padding: "1em", fill: '#dfaeee' }} />
+                <PersonOutlineIcon color='primary' style={{padding: "1em"}} />
               </IconButton>
             </Tooltip>
             <Menu

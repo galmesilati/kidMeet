@@ -7,9 +7,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 import { CHILD_URL, INTERESTS_URL } from '../../infra/urls';
-import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, useThemeProps } from '@mui/material';
+import { Box, Checkbox, Fade, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select, useThemeProps } from '@mui/material';
 import { UserContext } from '../../context/userContext';
 import * as urls from '../../infra/urls'
+import ChildSchedule from './childSchedule';
+import dayjs from 'dayjs';
 
 
 export default function NewChildModal({open, setOpen, editingChild, setEditingChild}) {
@@ -17,13 +19,21 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
   const user = React.useContext(UserContext)
 
   const [interests, setInterests] = React.useState([]);
+  const [interestsMap, setInterestsMap] = React.useState({});
   const [selectedInterests, setSelectedInterests] = React.useState([]);
+  const [scheduleOpen, setScheduleOpen] = React.useState(false)
 
   const [name, setName] = React.useState("")
   const [age, setAge] = React.useState("")
   const [kindergarten, setKindergarten] = React.useState("")
   const [school, setSchool] = React.useState("")
   const [classroom, setClassroom] = React.useState("")
+
+  const [scheduleData, setScheduleData] = React.useState({
+    start_time: null,
+    end_time: null,
+    type_activity: '',
+  })
 
 
   const handleChange = (event) => {
@@ -51,6 +61,11 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
       try {
         const response = await axios.get(INTERESTS_URL)
         setInterests(response.data.results)
+        const intMap = {}
+        response.data.results.forEach(element => {
+          intMap[element.interest_id] = element.name
+        });
+        setInterestsMap(intMap)
       } catch (error) {
         console.log('Error', error)
       }
@@ -64,10 +79,31 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
       setSchool(editingChild.school)
       setClassroom(editingChild.classroom)
       setSelectedInterests(
-        editingChild.interests.map((interest) => interest.name)
+        editingChild.interests.map((interestId) => interestsMap[interestId])
       )
     }
   }, [editingChild])
+
+
+  const createChildSchedule = async (childId) => {
+    try {
+      const formattedData = {
+        child: childId,
+        start_time: dayjs(scheduleData.start_time).format(),
+        end_time: dayjs(scheduleData.end_time).format(),
+        type_activity: scheduleData.type_activity
+      }
+      const scheduleResponse = await axios.post(urls.CHILD_SCHEDULE, formattedData)
+
+      if (scheduleResponse.status === 200) {
+        console.log('Schedule created successfully:', scheduleResponse.data)
+      } else {
+        console.error('Error', scheduleResponse.data)
+      } 
+    } catch (e) {
+      console.error('Error', e)
+    }
+  }
 
   
   const handleSubmit = async (event) => {
@@ -92,9 +128,12 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
         childData
       )
       console.log('child updated', response.data)
+      await createChildSchedule(response.data.child_id)
     } else {
       const response = await axios.post(CHILD_URL, childData);
       console.log("child created", response.data)
+
+      await createChildSchedule(response.data.child_id)
     }
     handleClose()
   } catch (error) {
@@ -177,7 +216,7 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
           />
 
         <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Sselect interests</InputLabel>
+        <InputLabel id="demo-multiple-checkbox-label">Select interests</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
@@ -196,6 +235,12 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
         </Select>
       </FormControl>
         </form>
+
+            <Button onClick={() => setScheduleOpen(true)}>Add Schedule</Button>
+            <Box display={scheduleOpen ? 'flex' : 'none'}>
+              <ChildSchedule data={scheduleData} setData={setScheduleData}/>
+            </Box>
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

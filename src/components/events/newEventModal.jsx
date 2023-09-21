@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import { SetNotificationContext } from '../../context/notificationContext';
 import { useContext } from 'react';
 import * as urls from '../../infra/urls'
+import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInput, Select } from '@mui/material';
 
 
 export default function NewEventModal({open, setOpen, editingEvent, setEditingEvent}) {
@@ -22,20 +23,55 @@ export default function NewEventModal({open, setOpen, editingEvent, setEditingEv
 
   const setNotification = useContext(SetNotificationContext)
 
-  const [childId, setChildId] = React.useState([])
+  const [children, setChildren] = React.useState([])
+  const [selectedChildren, setSelectedChildren] = React.useState([])
+  const [childrenMap, setChildrenMap] = React.useState({})
+
+  // const [childId, setChildId] = React.useState([])
   const [title, setTitle] = React.useState("")
   const [location, setLocation] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [startEvent, setStartEvent] = React.useState(null)
   const [endEvent, setEndEvent] = React.useState(null)
 
+  const handleChangeChildren = (event) => {
+    setSelectedChildren(event.target.value)
+  }
+
+  const createChildren = () => {
+    const filteredChildren = children.filter(child => selectedChildren.includes(child.name))
+    const childIdsArray = filteredChildren.map(childObj => childObj.child_id)
+    return (
+      childIdsArray
+    )
+  } 
+
   React.useEffect(() => {
+    async function fetchChildIds() {
+      try {
+        const response = await axios.get(urls.CHILD_URL)
+        setChildren(response.data.results)
+        const childMap = {}
+        response.data.results.forEach(element => {
+          childMap[element.child_id] = element.name
+        });
+        setChildrenMap(childMap)
+      } catch (error) {
+        console.log('Error', error)
+      }
+    }
+    fetchChildIds()
+
     if (editingEvent) {
-      setChildId(editingEvent.child_id)
+      // setChildId(editingEvent.childId)
       setTitle(editingEvent.title)
+      setLocation(editingEvent.location)
       setDescription(editingEvent.description)
-      setStartEvent(dayjs(editingEvent.startEvent))
-      setEndEvent(dayjs(editingEvent.endEvent))
+      setStartEvent(dayjs(editingEvent.start_event))
+      setEndEvent(dayjs(editingEvent.end_event))
+      setSelectedChildren(
+        editingEvent.children.map((childId) => childrenMap[childId])
+      )
     }
   }, [editingEvent])
 
@@ -44,14 +80,14 @@ export default function NewEventModal({open, setOpen, editingEvent, setEditingEv
     event.preventDefault()
 
     const eventData = {
-      child_id: childId,
       title: title,
       location: location,
       description: description,
       start_event: dayjs(startEvent).format(),
-      end_event: dayjs(endEvent).format()
+      end_event: dayjs(endEvent).format(),
+      children: createChildren()
     }
-    
+
     console.log('Event Data:', eventData)
 
     try {
@@ -87,9 +123,13 @@ export default function NewEventModal({open, setOpen, editingEvent, setEditingEv
 
   const handleClose = () => {
     setOpen(false);
-    setEditingEvent(null)
+    if (editingEvent){
+      setEditingEvent(null)
+    }
+    
 
-    setChildId("")
+    // setChildId("")
+    setSelectedChildren([])
     setTitle("")
     setLocation("")
     setDescription("")
@@ -102,7 +142,27 @@ export default function NewEventModal({open, setOpen, editingEvent, setEditingEv
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create New Event</DialogTitle>
         <DialogContent>
-          <TextField 
+          <FormControl sx={{ m: 1, width: 300 }}>
+          <InputLabel id="demo-multiple-checkbox-label">Select children</InputLabel>
+          <Select
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            multiple
+            value={selectedChildren}
+            onChange={handleChangeChildren}
+            input={<OutlinedInput label="Tag" />}
+            renderValue={(selected) => selected.join(', ')}
+          >
+            {children.map((child) => (
+              <MenuItem key={child.child_id} value={child.name}>
+                <Checkbox checked={selectedChildren.indexOf(child.name) > -1}/>
+                <ListItemText primary={child.name}/>
+              </MenuItem>
+            ))}
+
+          </Select>
+          </FormControl>
+          {/* <TextField 
             autoFocus
             margin="dense"
             id="child_id"
@@ -112,7 +172,7 @@ export default function NewEventModal({open, setOpen, editingEvent, setEditingEv
             variant="standard"
             value={childId}
             onChange={(e) => setChildId(e.target.value)}
-          />
+          /> */}
           <TextField 
             autoFocus
             margin="dense"

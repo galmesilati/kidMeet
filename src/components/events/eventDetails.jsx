@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { EVENT_DETAILS_URL } from "../../infra/urls"
-import { Box, Container, Stack } from "@mui/material"
+import { Box, Container, Grid, Paper, Stack, Typography } from "@mui/material"
 
 const EventDetails = () => {
 

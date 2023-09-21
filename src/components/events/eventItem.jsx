@@ -1,6 +1,7 @@
-import { IconButton, ListItem, Paper, Typography } from "@mui/material"
+import { IconButton, ListItem, Paper, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import ArrowRightTwoToneIcon from '@mui/icons-material/ArrowRightTwoTone';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
 
 export default function EventItem({myEvent, displayEdit=false, handleEditClick=null}){
@@ -20,17 +21,23 @@ export default function EventItem({myEvent, displayEdit=false, handleEditClick=n
               justifyContent: 'space-between',
               alignItems: 'center',
               paddingX: '2em'}}>
-      <Typography sx={{color: "grey"}}>{`${myEvent.title} ${myEvent.location}`}</Typography>
 
+      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} sx={{width: '100%'}} >
+
+      <Stack direction={'row'} alignItems={'center'} spacing={'2%'} sx={{width: '100%'}} >
       {displayEdit &&
-      <IconButton>
-            <ArrowCircleRightIcon onClick={() => handleEditClick(myEvent)} sx={{fill: "#a5ebff"}}/>
-        </IconButton>
-      }
-
-        <IconButton>
-            <ArrowCircleRightIcon onClick={handleClick} sx={{fill: "#a5ebff"}}/>
-        </IconButton>
+        <IconButton onClick={() => handleEditClick(myEvent)}>
+              <EditTwoToneIcon color="secondary"/>
+          </IconButton>
+        }
+        <Typography sx={{ color: 'secondary.dark'}}>
+          {`${myEvent.title} ${myEvent.location}`}
+          </Typography>
+        </Stack>
+          <IconButton onClick={handleClick}>
+              <ArrowRightTwoToneIcon color="secondary"/>
+          </IconButton>
+      </Stack>
 
       </Paper>
     </ListItem>

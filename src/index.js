@@ -16,6 +16,7 @@ import axios from 'axios';
 import ChildDetails from './components/children/childDetails';
 import ProfilePage from './components/profile/profilePage';
 import ChildEventsPage from './components/events/childEventsPage';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 axios.interceptors.request.use(
   (config) => {
@@ -75,13 +76,32 @@ const router = createBrowserRouter([
   }
 ])
 
+const myTheme = {
+  palette : {
+    mode: 'light'
+  ,
+  primary: {
+    main: '#84fa66', //green 
+  },
+  secondary: {
+    main: '#ec70ff', // purple
+    dark: '#be02db',
+  },
+}
+}
+
+const theme = createTheme(myTheme);
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Notification>
-    <UserProvider>
-      <RouterProvider router={router} />
-    </UserProvider>
-  </Notification>
+  <ThemeProvider theme={theme}>
+    <Notification>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </Notification>
+  </ThemeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -24,8 +24,8 @@ export default function ChildItem({child}){
       <Typography sx={{color: "grey"}}>{`${child.child_name}`}</Typography>
 
         {/* <IconButton onClick={handleClick}> */}
-            {/* <ArrowCircleRightIcon sx={{fill: "#a5ebff"}}/> */}
-        {/* </IconButton> */}
+            {/* <ArrowCircleRightIcon sx={{fill: "#a5ebff"}}/>
+        {</IconButton> */} */
 
       </Paper>
     </ListItem>

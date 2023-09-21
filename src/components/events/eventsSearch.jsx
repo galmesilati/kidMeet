@@ -1,12 +1,14 @@
 import { Autocomplete, Button, Container, TextField } from "@mui/material";
-import { EVENT_DETAILS_URL, TITLE_EVENTS_URL } from "../../infra/urls";
+import { CHILD_EVENTS_URL, EVENT_DETAILS_URL, TITLE_EVENTS_URL } from "../../infra/urls";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export default function EventsSearch({setEvents}) {
+export default function EventsSearch({setEvents, childEventsMode= false}) {
 
   const [eventTitle, setEventTitle] = useState([])
   const [selectedTitle, setSelectedTitle] = useState('')
+
+  const url = childEventsMode ? CHILD_EVENTS_URL : EVENT_DETAILS_URL
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,7 +16,7 @@ export default function EventsSearch({setEvents}) {
       setEventTitle(response.data)
     }
     fetchData()
-  }, [])
+  }, [childEventsMode])
 
   const handleRenderInput = (params) => {
     return <TextField {...params} label="Event title" value={selectedTitle} 
@@ -22,8 +24,12 @@ export default function EventsSearch({setEvents}) {
 }
 
   const handleSearch = async() => {
-    const response = await axios.get(EVENT_DETAILS_URL, {params: {title: selectedTitle}})
-    setEvents(response.data)
+    try {
+      const response = await axios.get(url, {params: {title: selectedTitle}})
+      setEvents(response.data)
+    } catch (e) {
+      console.error('Error', e)
+    }
   }
     return(
         <>
@@ -40,11 +46,10 @@ export default function EventsSearch({setEvents}) {
             renderInput={handleRenderInput}
             value={selectedTitle}
             onChange={(e, newValue) => {
-
               setSelectedTitle(newValue)
             }}
           />
-          <Button onClick={handleSearch} sx={{color:"#a5ebff", fontWeight: 700}}>Search</Button>
+          <Button color="secondary" onClick={handleSearch} sx={{fontWeight: 700}}>Search</Button>
         </Container>
         </>
     )

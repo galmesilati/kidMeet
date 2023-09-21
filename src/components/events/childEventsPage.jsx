@@ -35,7 +35,7 @@ const ChildEventsPage = () => {
   return(
     <>
       <Stack alignItems='center'>
-        <Typography sx={{color: '#b7e994'}} variant="h3">
+        <Typography color={'primary'} variant="h3">
           Child Events
         </Typography>
         <Button  sx={{width: '100%'}} color="secondary" onClick={() => {setOpenAddEventModal(true)}}>
@@ -46,7 +46,7 @@ const ChildEventsPage = () => {
               <AddIcon /> 
             </Stack>
         </Button>
-        <EventsSearch setEvents={setChildEvents}/>
+        <EventsSearch setEvents={setChildEvents} childEventsMode={true}/>
       </Stack>
       
       <ChildEventsList childEvents={childEvents} handleEditClick={handleEditClick}/>

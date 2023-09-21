@@ -1,5 +1,5 @@
-import { Stack } from "@mui/material";
-import {Typography} from '@mui/joy';
+import { Stack, Typography } from "@mui/material";
+// import {Typography} from '@mui/joy';
 
 const HomePage = () => {
   return(
@@ -7,7 +7,7 @@ const HomePage = () => {
       <Stack  width={{xs:"100%", lg:"50%"}} 
       alignItems={"center"} direction={"column"} spacing={"3em"} >
       
-      <Typography
+      <Typography color="primary"
       noWrap
       component="a"
       href="/"
@@ -18,12 +18,12 @@ const HomePage = () => {
         fontFamily: 'monospace',
         fontWeight: 600,
         letterSpacing: '1rem',
-        color: '#b7e994',
         textDecoration: 'none',
       }}
       >
         KIDate
       </Typography>
+
       <Typography variant="body1">
           Welcome!
           <br />

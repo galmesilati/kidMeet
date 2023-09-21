@@ -12,7 +12,7 @@ const ChildEventsList = ({childEvents, handleEditClick}) => {
 
 
   const items = childEvents.map((event) => {
-    return <EventItem key={event.event_id} myEvent={event} displayEdit={true} handleEditClick={handleEditClick}/>
+    return <EventItem key={event.id} myEvent={event} displayEdit={true} handleEditClick={handleEditClick} />
     })
  
 

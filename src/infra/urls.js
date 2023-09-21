@@ -1,4 +1,5 @@
 export const BASE_URL = "http://127.0.0.1:8000"
+// export const BASE_URL = ""
 
 export const KIDMEET_LIST_URL = `${BASE_URL}/api/meetup/event`
 
@@ -23,6 +24,8 @@ export const INTERESTS_URL = `${BASE_URL}/api/meetup/interest/`
 export const  CREATE_EVENT = `${BASE_URL}/api/meetup/event/`
 
 export const  UPDATE_EVENT = `${BASE_URL}/api/meetup/event/`
+
+export const CHILD_SCHEDULE = `${BASE_URL}/api/meetup/schedule/`
 
 export const UPLOAD_PROFILE_IMG_URL = `${BASE_URL}/api/meetup/profile/img`
 
