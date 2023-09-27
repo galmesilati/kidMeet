@@ -30,7 +30,7 @@ export default function EventItem({myEvent, displayEdit=false, handleEditClick=n
               <EditTwoToneIcon color="secondary"/>
           </IconButton>
         }
-        <Typography sx={{ color: 'secondary.dark'}}>
+        <Typography sx={{ color: `'secondary.dark'`}}>
           {`${myEvent.title} ${myEvent.location}`}
           </Typography>
         </Stack>

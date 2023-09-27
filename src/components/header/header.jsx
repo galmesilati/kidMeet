@@ -20,7 +20,7 @@ const pages = ['Home', 'Children', 'Events', 'Child Events']
     'Home': '/',
     'Children': '/children-page',
     'Events': '/events-page',
-    'Child Events': '/child-events'
+    'Child Events': '/child-events',
     
   }
 

@@ -25,7 +25,9 @@ export const  CREATE_EVENT = `${BASE_URL}/api/meetup/event/`
 
 export const  UPDATE_EVENT = `${BASE_URL}/api/meetup/event/`
 
-export const CHILD_SCHEDULE = `${BASE_URL}/api/meetup/schedule/`
+export const SCHEDULE_URL = `${BASE_URL}/api/meetup/schedule/`
+
+export const CHILD_SCHEDULE_URL = `/view_child_schedule`
 
 export const UPLOAD_PROFILE_IMG_URL = `${BASE_URL}/api/meetup/profile/img`
 

@@ -16,6 +16,10 @@ function App() {
   useEffect(
     () => {
       const fetchData = async () => {
+        document.title = 'KIDate - MEET UP';
+        document.querySelector('link[rel="icon"]').setAttribute(
+          'href', 'https://i.ibb.co/Cb7mns6/KIDate-2.png'
+        )
         // const token = localStorage.getItem('token')
         // if (token) {
           const meResponse = await axios.get(ME_URL)

@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { GOOGLE_AUTH_URL, LOGIN_URL, ME_URL } from "../../infra/urls";
 import { SetUserContext, UserContext } from "../../context/userContext";
@@ -16,6 +16,14 @@ import { SetNotificationContext } from "../../context/notificationContext";
 import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 const LoginPage = () => {
+
+  useEffect(() => {
+    document.title = 'KIDate - MEET UP';
+      document.querySelector('link[rel="icon"]').setAttribute(
+        'href', 'https://i.ibb.co/Cb7mns6/KIDate-2.png'
+        )
+
+  }, [])
 
   const navigate = useNavigate()
   const setUser = useContext(SetUserContext)
@@ -147,7 +155,7 @@ const LoginPage = () => {
             onError={() => {
               console.log('Login Failed');
             }}/>
-            
+
         </Box>
       </Box>
     </Container>

@@ -20,6 +20,14 @@ const defaultTheme = createTheme();
 
 const Signup = () => {
 
+  React.useEffect(() => {
+    document.title = 'KIDate - MEET UP';
+    document.querySelector('link[rel="icon"]').setAttribute(
+      'href', 'https://i.ibb.co/Cb7mns6/KIDate-2.png'
+        )
+
+  }, [])
+
   const navigate = useNavigate()
 
   const handleSubmit = async (event) => {
@@ -77,7 +85,7 @@ const Signup = () => {
           fontFamily: 'monospace',
           fontWeight: 700,
           letterSpacing: '.3rem',
-          color: '#b7e994',
+          color: '#84fa66',
           textDecoration: 'none',
         }}
       >

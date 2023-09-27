@@ -12,11 +12,14 @@ import { UserContext } from '../../context/userContext';
 import * as urls from '../../infra/urls'
 import ChildSchedule from './childSchedule';
 import dayjs from 'dayjs';
+import { SetNotificationContext } from '../../context/notificationContext';
+
 
 
 export default function NewChildModal({open, setOpen, editingChild, setEditingChild}) {
 
   const user = React.useContext(UserContext)
+  const setNotification = React.useContext(SetNotificationContext)
 
   const [interests, setInterests] = React.useState([]);
   const [interestsMap, setInterestsMap] = React.useState({});
@@ -28,12 +31,14 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
   const [kindergarten, setKindergarten] = React.useState("")
   const [school, setSchool] = React.useState("")
   const [classroom, setClassroom] = React.useState("")
+  const [scheduleCount, setScheduleCount] = React.useState(1)
 
-  const [scheduleData, setScheduleData] = React.useState({
+  const [scheduleData, setScheduleData] = React.useState([
+    {
     start_time: null,
     end_time: null,
     type_activity: '',
-  })
+  }, ])
 
 
   const handleChange = (event) => {
@@ -87,19 +92,24 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
 
   const createChildSchedule = async (childId) => {
     try {
-      const formattedData = {
-        child: childId,
-        start_time: dayjs(scheduleData.start_time).format(),
-        end_time: dayjs(scheduleData.end_time).format(),
-        type_activity: scheduleData.type_activity
-      }
-      const scheduleResponse = await axios.post(urls.CHILD_SCHEDULE, formattedData)
+      for (const schedule of scheduleData) {
+        console.log('schedule', JSON.stringify(schedule))
+        console.log('scheduleData', JSON.stringify(scheduleData))
+        const formattedData = {
+          child: childId,
+          start_time: dayjs(schedule.start_time).format(),
+          end_time: dayjs(schedule.end_time).format(),
+          type_activity: schedule.type_activity
+        }
+      console.log('formatted data', JSON.stringify(formattedData))
+      const scheduleResponse = await axios.post(urls.SCHEDULE_URL, formattedData)
 
       if (scheduleResponse.status === 200) {
         console.log('Schedule created successfully:', scheduleResponse.data)
       } else {
         console.error('Error', scheduleResponse.data)
-      } 
+      }
+    }
     } catch (e) {
       console.error('Error', e)
     }
@@ -128,16 +138,30 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
         childData
       )
       console.log('child updated', response.data)
+
       await createChildSchedule(response.data.child_id)
+
+      setNotification({
+        open: true,
+        massage: 'Child updated successfully'
+      })
     } else {
       const response = await axios.post(CHILD_URL, childData);
       console.log("child created", response.data)
+      setNotification({
+        open: true,
+        massage: "Child created successfully"
+      })
 
       await createChildSchedule(response.data.child_id)
     }
     handleClose()
   } catch (error) {
     console.log('Error', error);
+    setNotification({
+      open: true,
+      massage: "Error creating/editing the child. Please try again."
+    });
   }
   }
  
@@ -237,8 +261,23 @@ export default function NewChildModal({open, setOpen, editingChild, setEditingCh
         </form>
 
             <Button onClick={() => setScheduleOpen(true)}>Add Schedule</Button>
+            <p>activities count: {scheduleCount}</p>
+            <Button onClick={() => { 
+              setScheduleCount(prevCount => prevCount+1)
+              const newScehduleData = [...scheduleData]
+              newScehduleData.push({
+                start_time: null,
+                end_time: null,
+                type_activity: '',
+              })
+              setScheduleData(newScehduleData)
+              }}>+</Button>
+            <Button onClick={() => setScheduleCount(prevCount => prevCount-1)}>-</Button>
             <Box display={scheduleOpen ? 'flex' : 'none'}>
-              <ChildSchedule data={scheduleData} setData={setScheduleData}/>
+              {
+                Array.from({length: scheduleCount}).map((_, index) => {return <ChildSchedule index={index} data={scheduleData} setData={setScheduleData}/>})
+                // [1,2,3].map((_, index) => {return <ChildSchedule data={scheduleData} setData={setScheduleData}/>})
+              }
             </Box>
 
         </DialogContent>

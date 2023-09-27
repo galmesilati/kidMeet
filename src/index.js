@@ -17,6 +17,8 @@ import ChildDetails from './components/children/childDetails';
 import ProfilePage from './components/profile/profilePage';
 import ChildEventsPage from './components/events/childEventsPage';
 import { ThemeProvider, createTheme } from '@mui/material';
+import CalendarPage from './components/schedule/calendarPage';
+
 
 axios.interceptors.request.use(
   (config) => {
@@ -59,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: 'child-events',
         element: <ChildEventsPage />
+      },
+      {
+        path: '/schedule-page/:childId',
+        element: <CalendarPage />
       },
       {
         path: '/profile',
